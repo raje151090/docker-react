@@ -1,0 +1,20 @@
+#docker run -p 3001:3000 -v $(pwd):/app sha256:3d712519564c2415dad2521fe85e6d0e8e4a5b460b121cb2dee7224325c5ab64
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
